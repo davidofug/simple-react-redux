@@ -54,3 +54,17 @@ ul > form input[type="submit"] {
 	color: #ddd;
 	font-size: 0.8rem;
 }
+
+nav {
+}
+nav > ul {
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+	width: 100%;
+	background-color: transparent;
+}
+nav > ul > li > a {
+	text-decoration: none;
+	color: rgb(11, 160, 152);
+}

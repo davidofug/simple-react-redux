@@ -1,5 +1,6 @@
 import {
 	ADD_SONG,
+	ADD_SONG_TO_CART,
 	DELETE_SONG,
 	EDIT_SONG,
 	UPDATE_SONG,
@@ -13,6 +14,12 @@ export const addSong = (song) => {
 	};
 };
 
+export const addSongToCart = (song) => {
+	return {
+		type: ADD_SONG_TO_CART,
+		payload: song,
+	};
+};
 export const removeSong = (index) => {
 	return {
 		type: DELETE_SONG,
@@ -27,10 +34,12 @@ export const editSong = (index) => {
 	};
 };
 
-export const updateSong = (title, index) => {
+export const updateSong = (title, artist, cost, index) => {
 	return {
 		type: UPDATE_SONG,
 		title,
+		artist,
+		cost,
 		index,
 	};
 };

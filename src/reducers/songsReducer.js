@@ -8,10 +8,20 @@ import {
 
 const initialState = {
 	songs: [
-		{ title: "I love redux", editing: false },
-		{ title: "The redux song", editing: false },
-		{ title: "Run to the redux hill", editing: false },
+		{
+			title: "Amazing Grace",
+			artist: "Hillsong",
+			cost: 10.0,
+			editing: false,
+		},
+		{
+			title: "No longer slave",
+			artist: "Bethel Music",
+			cost: 10.0,
+			editing: false,
+		},
 	],
+	cart: [],
 };
 
 export default function songsReducer(state = initialState, action) {
