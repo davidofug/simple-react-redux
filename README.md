@@ -1,4 +1,4 @@
-# React Global local Statemanagement
+# Managing State in React Class Based Components with Redux
 
 Get started with Redux to management state in React Class Based Component apps.
 
