@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import {
 	addSong,
+	loadUsers,
 	removeSong,
 	editSong,
 	updateSong,
@@ -21,6 +22,7 @@ class SongList extends React.Component {
 		};
 
 		this.onChange = this.onChange.bind(this);
+		this.loadUsers = this.loadUsers.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 		this.addToCart = this.addToCart.bind(this);
 		this.remove = this.remove.bind(this);
@@ -30,19 +32,30 @@ class SongList extends React.Component {
 		this.updatedVal = this.updatedVal.bind(this);
 	}
 
+	componentDidMount() {
+		this.loadUsers();
+	}
+
 	onSubmit(e) {
 		e.preventDefault();
 
 		const addedSong = {
 			title: this.state.title,
 			artist: this.state.artist,
-			cost: this.state.cost,
+			cost: +this.state.cost,
 		};
 
 		this.props.addSong(addedSong);
 		this.setState({ title: "", artist: "", cost: 0.0 });
 	}
 
+	loadUsers() {
+		fetch("https://jsonplaceholder.typicode.com/users")
+			.then((response) => response.json())
+			.then((result) => {
+				this.props.loadUsers(result);
+			});
+	}
 	addToCart(i) {
 		const song = this.props.songs[i];
 		this.props.addSongToCart(song);
@@ -73,10 +86,10 @@ class SongList extends React.Component {
 		this.props.updateSong(
 			this.state.currentTitle,
 			this.state.currentArtist,
-			this.state.currentCost,
+			+this.state.currentCost,
 			i
 		);
-		this.setState({ currentTitle: "", currentArtist: "", currentCost: "" });
+		this.setState({ currentTitle: "", currentArtist: "", currentCost: 0 });
 	}
 
 	cancel(i) {
@@ -85,108 +98,126 @@ class SongList extends React.Component {
 
 	render() {
 		const { songs } = this.props;
-		return (
-			<>
-				<h1>Available Songs to shop</h1>
-				<ul>
-					{songs.map((song, i) => {
-						return (
-							<Fragment key={song.title}>
-								{!song.editing ? (
-									<li>
-										{song.title} - {song.artist} $
-										{song.cost}
-										<span>
-											<button
-												onClick={() =>
-													this.addToCart(i)
-												}>
-												Add to Cart
-											</button>
-											<button
-												onClick={() => this.remove(i)}>
-												Delete
-											</button>
-											<button
-												onClick={() =>
-													this.edit(
-														i,
-														song.title,
-														song.artist,
-														song.cost
-													)
-												}>
-												Edit
-											</button>
-										</span>
-									</li>
-								) : (
-									<li>
-										<form>
-											<input
-												type="text"
-												name="currentTitle"
-												value={this.state.currentTitle}
-												onChange={this.updatedVal}
-											/>
-											<input
-												type="text"
-												name="currentArtist"
-												value={this.state.currentArtist}
-												onChange={this.updatedVal}
-											/>
-											<input
-												type="text"
-												name="currentCost"
-												value={this.state.currentCost}
-												onChange={this.updatedVal}
-											/>
-										</form>
-										<span>
-											<button
-												onClick={() => this.cancel(i)}>
-												Cancel
-											</button>
-											<button
-												onClick={() => this.update(i)}>
-												Update
-											</button>
-										</span>
-									</li>
-								)}
-							</Fragment>
-						);
-					})}
-					<form onSubmit={this.onSubmit}>
-						<input
-							type="text"
-							name="title"
-							onChange={this.onChange}
-						/>
-						<input
-							type="text"
-							name="artist"
-							onChange={this.onChange}
-						/>
-						<input
-							type="text"
-							name="cost"
-							onChange={this.onChange}
-						/>
-						<input type="submit" value="Add Song" />
-					</form>
-				</ul>
-			</>
-		);
+		if (songs?.length > 0)
+			return (
+				<>
+					<h1>Available Songs to shop</h1>
+					<ul>
+						{songs.map((song, i) => {
+							return (
+								<Fragment key={song.title}>
+									{!song.editing ? (
+										<li>
+											{song.title} - {song.artist} $
+											{song.cost}
+											<span>
+												<button
+													onClick={() =>
+														this.addToCart(i)
+													}>
+													Add to Cart
+												</button>
+												<button
+													onClick={() =>
+														this.remove(i)
+													}>
+													Delete
+												</button>
+												<button
+													onClick={() =>
+														this.edit(
+															i,
+															song.title,
+															song.artist,
+															song.cost
+														)
+													}>
+													Edit
+												</button>
+											</span>
+										</li>
+									) : (
+										<li>
+											<form>
+												<input
+													type="text"
+													name="currentTitle"
+													value={
+														this.state.currentTitle
+													}
+													onChange={this.updatedVal}
+												/>
+												<input
+													type="text"
+													name="currentArtist"
+													value={
+														this.state.currentArtist
+													}
+													onChange={this.updatedVal}
+												/>
+												<input
+													type="text"
+													name="currentCost"
+													value={
+														this.state.currentCost
+													}
+													onChange={this.updatedVal}
+												/>
+											</form>
+											<span>
+												<button
+													onClick={() =>
+														this.cancel(i)
+													}>
+													Cancel
+												</button>
+												<button
+													onClick={() =>
+														this.update(i)
+													}>
+													Update
+												</button>
+											</span>
+										</li>
+									)}
+								</Fragment>
+							);
+						})}
+						<form onSubmit={this.onSubmit}>
+							<input
+								type="text"
+								name="title"
+								placeholder="Title"
+								onChange={this.onChange}
+							/>
+							<input
+								type="text"
+								name="artist"
+								placeholder="Artist"
+								onChange={this.onChange}
+							/>
+							<input
+								type="text"
+								name="cost"
+								placeholder="Cost"
+								onChange={this.onChange}
+							/>
+							<input type="submit" value="Add Song" />
+						</form>
+					</ul>
+				</>
+			);
 	}
 }
 
 const mapStateToProps = (state) => ({
 	...state.songs,
+	...state.users,
 });
 
 export default connect(mapStateToProps, {
 	addSong,
+	loadUsers,
 	addSongToCart,
 	removeSong,
 	editSong,

@@ -1,5 +1,6 @@
 import {
 	ADD_SONG,
+	LOAD_USERS,
 	DELETE_SONG,
 	EDIT_SONG,
 	UPDATE_SONG,
@@ -21,7 +22,7 @@ const initialState = {
 			editing: false,
 		},
 	],
-	cart: [],
+	users: [],
 };
 
 export default function songsReducer(state = initialState, action) {
@@ -29,6 +30,11 @@ export default function songsReducer(state = initialState, action) {
 		case ADD_SONG:
 			return {
 				songs: [action.payload, ...state.songs],
+			};
+		case LOAD_USERS:
+			return {
+				songs: [...state.songs],
+				users: [...action.payload],
 			};
 		case DELETE_SONG:
 			return {
@@ -46,7 +52,13 @@ export default function songsReducer(state = initialState, action) {
 			return {
 				songs: state.songs.map((song, i) =>
 					i === action.index
-						? { ...song, title: action.title, editing: false }
+						? {
+								...song,
+								title: action.title,
+								artist: action.artist,
+								cost: action.cost,
+								editing: false,
+						  }
 						: song
 				),
 			};
