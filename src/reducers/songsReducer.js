@@ -34,7 +34,7 @@ export default function songsReducer(state = initialState, action) {
 		case FETCH_USERS:
 			return {
 				songs: [...state.songs],
-				users: [...action.payload],
+				users: [...state.users, ...action.payload],
 			};
 		case DELETE_SONG:
 			return {

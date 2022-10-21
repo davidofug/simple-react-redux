@@ -30,10 +30,11 @@ class SongList extends React.Component {
 		this.update = this.update.bind(this);
 		this.cancel = this.cancel.bind(this);
 		this.updatedVal = this.updatedVal.bind(this);
+		this.fetchUsers();
 	}
 
 	componentDidMount() {
-		this.fetchUsers();
+		// this.fetchUsers();
 	}
 
 	onSubmit(e) {

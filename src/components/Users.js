@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 class Users extends Component {
 	render() {
+		console.log(this.props);
 		const { users } = this.props;
 		if (users?.length > 0) {
 			return (
@@ -15,6 +16,7 @@ class Users extends Component {
 				</div>
 			);
 		}
+		return <h1>Waiting for Users</h1>;
 	}
 }
 

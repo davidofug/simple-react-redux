@@ -41,4 +41,6 @@ const mapStateToProps = (state) => ({
 	...state.items,
 });
 
-export default connect(mapStateToProps, { removeItem })(Cart);
+const mapDispatchToProps = { removeItem };
+// export default connect(mapStateToProps, {removeItem})(Cart);
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);
