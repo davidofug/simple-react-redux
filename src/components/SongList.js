@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import {
 	addSong,
-	loadUsers,
+	fetchUsers,
 	removeSong,
 	editSong,
 	updateSong,
@@ -22,7 +22,7 @@ class SongList extends React.Component {
 		};
 
 		this.onChange = this.onChange.bind(this);
-		this.loadUsers = this.loadUsers.bind(this);
+		this.fetchUsers = this.fetchUsers.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 		this.addToCart = this.addToCart.bind(this);
 		this.remove = this.remove.bind(this);
@@ -33,7 +33,7 @@ class SongList extends React.Component {
 	}
 
 	componentDidMount() {
-		this.loadUsers();
+		this.fetchUsers();
 	}
 
 	onSubmit(e) {
@@ -49,11 +49,11 @@ class SongList extends React.Component {
 		this.setState({ title: "", artist: "", cost: 0.0 });
 	}
 
-	loadUsers() {
+	fetchUsers() {
 		fetch("https://jsonplaceholder.typicode.com/users")
 			.then((response) => response.json())
 			.then((result) => {
-				this.props.loadUsers(result);
+				this.props.fetchUsers(result);
 			});
 	}
 	addToCart(i) {
@@ -217,7 +217,7 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
 	addSong,
-	loadUsers,
+	fetchUsers,
 	addSongToCart,
 	removeSong,
 	editSong,

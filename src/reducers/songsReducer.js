@@ -1,6 +1,6 @@
 import {
 	ADD_SONG,
-	LOAD_USERS,
+	FETCH_USERS,
 	DELETE_SONG,
 	EDIT_SONG,
 	UPDATE_SONG,
@@ -31,7 +31,7 @@ export default function songsReducer(state = initialState, action) {
 			return {
 				songs: [action.payload, ...state.songs],
 			};
-		case LOAD_USERS:
+		case FETCH_USERS:
 			return {
 				songs: [...state.songs],
 				users: [...action.payload],

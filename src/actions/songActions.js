@@ -1,6 +1,6 @@
 import {
 	ADD_SONG,
-	LOAD_USERS,
+	FETCH_USERS,
 	ADD_SONG_TO_CART,
 	DELETE_SONG,
 	EDIT_SONG,
@@ -15,9 +15,9 @@ export const addSong = (song) => {
 	};
 };
 
-export const loadUsers = (users) => {
+export const fetchUsers = (users) => {
 	return {
-		type: LOAD_USERS,
+		type: FETCH_USERS,
 		payload: users,
 	};
 };
